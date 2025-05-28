@@ -18,11 +18,13 @@ class EnvironmentSetupAgent(val project: Project) {
         private val logger = KotlinLogging.logger { }
     }
 
-    private val token: String =
+    private val token: String by lazy {
         System.getenv("GRAZIE_TOKEN") ?: error("GRAZIE_TOKEN environment variable is not set")
+    }
 
-    private val openAiToken: String =
+    private val openAiToken: String by lazy {
         System.getenv("OPENAI_TOKEN") ?: error("OPENAI_TOKEN environment variable is not set")
+    }
 
     suspend fun execute(issueDescription: String, onAgentEvent: suspend (Message) -> Unit): String? {
         val agentConfig = AIAgentConfig(

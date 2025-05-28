@@ -17,8 +17,7 @@ class ChatPanelService(val project: Project, val coroutineScope: CoroutineScope)
     fun startAgent(inputMessage: String) {
         coroutineScope.launch {
             val agent = EnvironmentSetupAgent(project)
-            val result = agent.execute(inputMessage) { chatPanel.addMessage(it) }
-            result?.let { chatPanel.addAgentForUserMessage(it) }
+            agent.execute(inputMessage) { chatPanel.addMessage(it) }
         }
     }
 }

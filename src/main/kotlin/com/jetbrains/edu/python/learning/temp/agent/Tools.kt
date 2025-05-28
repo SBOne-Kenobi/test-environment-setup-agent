@@ -66,6 +66,21 @@ class EnvironmentSetupTools(val project: Project) : ToolSet {
     }
 
     @Tool
+    @LLMDescription("Executes a command safely by asking for user confirmation first.")
+    fun executeCommand(
+        @LLMDescription("The command to execute")
+        command: String,
+        @LLMDescription("The purpose or reason for executing the command")
+        purpose: String,
+    ): String {
+        if (!askUserFor(command, purpose)) {
+            return "User denied command execution"
+        }
+        return executeCommandUnsafe(command)
+    }
+
+
+    @Tool
     @LLMDescription("Gets the list of installed Python versions on the system.")
     fun getInstalledPythonVersions(): String {
         // Check for Python 3 installations
